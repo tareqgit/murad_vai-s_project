@@ -19,7 +19,10 @@ public class class2 : MonoBehaviour {
         _camera = Camera.main;
 
 	}
-	
+
+
+    public static bool matched;
+
 	// Update is called once per frame
 	void Update () {
 
@@ -65,9 +68,11 @@ public class class2 : MonoBehaviour {
             if ((start_name == end_name) && (start_name != "") && (end_name != ""))
             {
                 Debug.Log("Match");
+                matched = true;
             }else if((start_name != end_name) && (start_name != "") && (end_name != ""))
             {
                 Debug.Log("Not Matched");
+                matched = false;
             }
 
 
@@ -75,8 +80,17 @@ public class class2 : MonoBehaviour {
 
 
             _hasStartPos = false;
-            _lineRenderer.enabled = false;
-          
+            if (matched == true)
+            {
+                _lineRenderer.enabled = true;
+                LineController.cur_Line++;
+                LineController.instance.m_Start();
+                gameObject.GetComponent<class2>().enabled = false;
+            }
+            else
+            {
+                _lineRenderer.enabled = false;
+            }
 
         }
 

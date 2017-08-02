@@ -31,6 +31,9 @@ public class Class_1 : MonoBehaviour
                 img.gameObject.name = "should have no child"; //changing the name of that gameObject for checking targetting is right
 
                 img.gameObject.GetComponent<Image>().sprite = questions[question_no_running].question_Sprite ;//accessing sprite from the multi-Dimensional array.
+
+                Camera.main.GetComponent<AudioSource>().clip =(questions[question_no_running].q_Clip);
+                Camera.main.GetComponent<AudioSource>().Play();
                                                                                                                       //Debug.Log("" + i);
             }
         }
@@ -58,6 +61,8 @@ public class Class_1 : MonoBehaviour
                     }
                 }
             }
+
+
         }
 
     
@@ -74,16 +79,19 @@ public class Class_1 : MonoBehaviour
             if (question_no_running + 1 < questions.Length)
             {
                 question_no_running++;
+                Camera.main.GetComponent<AudioSource>().Stop();
                 change_image();
+                
             }
 
-
+           
         }
         else
         {
             Debug.Log("Wrong Answer");
             Game_Manager.instance.Life--;
             Game_Manager.instance.LifeManager();
+            //Camera.main.GetComponent<AudioSource>().Stop();
         }
     }
 }
@@ -103,13 +111,15 @@ public class question
     public Sprite question_Sprite;
     public Option[] options;//this is a Class Under this class 
     public int answer;
+    public AudioClip q_Clip;
 
-    public question(string question_string,Sprite question_Sprite, Option[] options, int answer)//constructor for accessing them by pressing .
+    public question(string question_string,Sprite question_Sprite, Option[] options, int answer,AudioClip q_clip)//constructor for accessing them by pressing .
     {
         this.question_string = question_string;
         this.question_Sprite = question_Sprite;
         this.options = options;
         this.answer = answer;
+        this.q_Clip = q_clip;
     }
 }
 
